@@ -21,6 +21,7 @@ import {
   Factory,
   TrendingUp,
   ShoppingCart,
+  Receipt,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
@@ -127,6 +128,12 @@ const navItems: NavItem[] = [
     icon: <ShoppingCart size={20} />,
     label: 'Purchase Requests',
     path: '/requests',
+    roles: ['admin', 'manager', 'employee'],
+  },
+  {
+    icon: <Receipt size={20} />,
+    label: 'Reimbursements',
+    path: '/reimbursements',
     roles: ['admin', 'manager', 'employee'],
   },
   {
