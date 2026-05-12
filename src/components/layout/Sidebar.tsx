@@ -131,6 +131,12 @@ const navItems: NavItem[] = [
     roles: ['admin', 'manager', 'employee'],
   },
   {
+    icon: <Receipt size={20} />,
+    label: 'Reimbursements',
+    path: '/reimbursements',
+    roles: ['admin', 'manager', 'employee'],
+  },
+  {
     icon: <Settings size={20} />,
     label: 'Settings',
     path: '/settings',
