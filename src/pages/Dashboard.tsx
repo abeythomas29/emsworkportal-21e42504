@@ -17,7 +17,6 @@ import { LowStockWidget } from '@/components/dashboard/LowStockWidget';
 import { SalesKpiStrip } from '@/components/dashboard/SalesKpiStrip';
 import { PendingLeavesCompact } from '@/components/dashboard/PendingLeavesCompact';
 import { PurchaseRequestsWidget } from '@/components/dashboard/PurchaseRequestsWidget';
-import { FollowUpsWidget } from '@/components/dashboard/FollowUpsWidget';
 import {
   Users,
   Clock,
@@ -181,11 +180,8 @@ export default function DashboardPage() {
               <OnLeaveToday />
             </div>
 
-            {/* Sales Follow-ups + Purchase Requests */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <FollowUpsWidget />
-              <PurchaseRequestsWidget />
-            </div>
+            {/* Purchase Requests */}
+            <PurchaseRequestsWidget />
 
             {/* Birthdays + Check In/Out */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

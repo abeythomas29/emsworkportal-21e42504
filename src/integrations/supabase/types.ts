@@ -145,129 +145,6 @@ export type Database = {
         }
         Relationships: []
       }
-      lead_activities: {
-        Row: {
-          activity_type: string
-          created_at: string
-          description: string | null
-          id: string
-          lead_id: string
-          user_id: string | null
-        }
-        Insert: {
-          activity_type: string
-          created_at?: string
-          description?: string | null
-          id?: string
-          lead_id: string
-          user_id?: string | null
-        }
-        Update: {
-          activity_type?: string
-          created_at?: string
-          description?: string | null
-          id?: string
-          lead_id?: string
-          user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "lead_activities_lead_id_fkey"
-            columns: ["lead_id"]
-            isOneToOne: false
-            referencedRelation: "leads"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "lead_activities_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      leads: {
-        Row: {
-          assigned_to: string | null
-          city: string | null
-          company_name: string
-          contact_person: string | null
-          created_at: string
-          created_by: string | null
-          email: string | null
-          estimated_value: number
-          id: string
-          lost_reason: string | null
-          next_follow_up: string | null
-          notes: string | null
-          phone: string | null
-          product_interest: string | null
-          source: Database["public"]["Enums"]["lead_source"]
-          source_details: string | null
-          state: string | null
-          status: Database["public"]["Enums"]["lead_status"]
-          updated_at: string
-        }
-        Insert: {
-          assigned_to?: string | null
-          city?: string | null
-          company_name: string
-          contact_person?: string | null
-          created_at?: string
-          created_by?: string | null
-          email?: string | null
-          estimated_value?: number
-          id?: string
-          lost_reason?: string | null
-          next_follow_up?: string | null
-          notes?: string | null
-          phone?: string | null
-          product_interest?: string | null
-          source?: Database["public"]["Enums"]["lead_source"]
-          source_details?: string | null
-          state?: string | null
-          status?: Database["public"]["Enums"]["lead_status"]
-          updated_at?: string
-        }
-        Update: {
-          assigned_to?: string | null
-          city?: string | null
-          company_name?: string
-          contact_person?: string | null
-          created_at?: string
-          created_by?: string | null
-          email?: string | null
-          estimated_value?: number
-          id?: string
-          lost_reason?: string | null
-          next_follow_up?: string | null
-          notes?: string | null
-          phone?: string | null
-          product_interest?: string | null
-          source?: Database["public"]["Enums"]["lead_source"]
-          source_details?: string | null
-          state?: string | null
-          status?: Database["public"]["Enums"]["lead_status"]
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "leads_assigned_to_fkey"
-            columns: ["assigned_to"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "leads_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       leave_balances: {
         Row: {
           casual_leave: number
@@ -1046,21 +923,6 @@ export type Database = {
         | "holiday"
         | "weekend"
       employee_type: "online" | "offline"
-      lead_source:
-        | "indiamart"
-        | "referral"
-        | "website"
-        | "direct"
-        | "tradeshow"
-        | "other"
-      lead_status:
-        | "new"
-        | "sample_requested"
-        | "sample_sent"
-        | "quote_sent"
-        | "negotiation"
-        | "won"
-        | "lost"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1199,23 +1061,6 @@ export const Constants = {
         "weekend",
       ],
       employee_type: ["online", "offline"],
-      lead_source: [
-        "indiamart",
-        "referral",
-        "website",
-        "direct",
-        "tradeshow",
-        "other",
-      ],
-      lead_status: [
-        "new",
-        "sample_requested",
-        "sample_sent",
-        "quote_sent",
-        "negotiation",
-        "won",
-        "lost",
-      ],
     },
   },
 } as const
