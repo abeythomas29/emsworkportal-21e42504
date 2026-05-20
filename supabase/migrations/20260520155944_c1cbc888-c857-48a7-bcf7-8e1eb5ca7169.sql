@@ -1,0 +1,1 @@
+UPDATE public.leave_balances SET earned_leave = 0 WHERE earned_leave = 15;
