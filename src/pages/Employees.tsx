@@ -141,6 +141,58 @@ export default function EmployeesPage() {
           )}
         </div>
 
+        {/* Pending Approvals */}
+        {role === 'admin' && employees.some(e => !e.is_active) && (
+          <Card className="border-warning/40 bg-warning/5">
+            <CardContent className="pt-6 space-y-4">
+              <div className="flex items-center gap-2">
+                <UserCheck className="w-5 h-5 text-warning" />
+                <h2 className="font-semibold text-foreground">
+                  Pending Approvals ({employees.filter(e => !e.is_active).length})
+                </h2>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                These users have signed up but cannot access the app until you approve them and
+                assign a department.
+              </p>
+              <div className="space-y-2">
+                {employees.filter(e => !e.is_active).map((emp) => (
+                  <div key={emp.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-lg bg-background border border-border">
+                    <div className="min-w-0">
+                      <p className="font-medium text-foreground truncate">{emp.full_name}</p>
+                      <p className="text-xs text-muted-foreground truncate">{emp.email}</p>
+                      {emp.department && (
+                        <p className="text-xs text-muted-foreground mt-0.5">Dept: {emp.department}</p>
+                      )}
+                    </div>
+                    <div className="flex gap-2 shrink-0">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          setSelectedEmployee(emp);
+                          setShowEditDialog(true);
+                        }}
+                      >
+                        Assign Department
+                      </Button>
+                      <Button
+                        size="sm"
+                        onClick={() => activateEmployee(emp.id)}
+                        disabled={!emp.department}
+                        title={!emp.department ? 'Assign a department first' : 'Approve and activate'}
+                      >
+                        <UserCheck className="w-4 h-4 mr-1" />
+                        Approve
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Filters */}
         <Card>
           <CardContent className="pt-6">
