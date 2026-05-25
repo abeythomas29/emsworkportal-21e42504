@@ -18,8 +18,47 @@ export const COURIERS: { name: string; trackUrl: (id: string) => string }[] = [
   { name: 'Other', trackUrl: (id) => `https://www.google.com/search?q=${encodeURIComponent(id + ' tracking')}` },
 ];
 
+// Aliases / common misspellings → canonical courier name
+const COURIER_ALIASES: Record<string, string> = {
+  'shree maruthi': 'Shree Maruti',
+  'shri maruti': 'Shree Maruti',
+  'shri maruthi': 'Shree Maruti',
+  'sree maruti': 'Shree Maruti',
+  'sree maruthi': 'Shree Maruti',
+  'smcs': 'Shree Maruti',
+  'shree maruti courier': 'Shree Maruti',
+  'shree maruti integrated logistics': 'Shree Maruti',
+  'smile': 'Shree Maruti',
+  'blue dart': 'Bluedart',
+  'blue-dart': 'Bluedart',
+  'xpress bees': 'XpressBees',
+  'ecom': 'Ecom Express',
+  'ecomexpress': 'Ecom Express',
+  'india post': 'India Post',
+  'speed post': 'India Post',
+  'dtdc express': 'DTDC',
+};
+
+export function resolveCourierName(input: string): string {
+  const raw = (input || '').trim().toLowerCase();
+  if (!raw) return 'Other';
+  if (COURIER_ALIASES[raw]) return COURIER_ALIASES[raw];
+  // exact match
+  const exact = COURIERS.find((c) => c.name.toLowerCase() === raw);
+  if (exact) return exact.name;
+  // partial / contains match
+  const partial = COURIERS.find((c) => raw.includes(c.name.toLowerCase()) || c.name.toLowerCase().includes(raw));
+  if (partial) return partial.name;
+  // alias contains
+  for (const [alias, canonical] of Object.entries(COURIER_ALIASES)) {
+    if (raw.includes(alias)) return canonical;
+  }
+  return 'Other';
+}
+
 export function getCourierTrackingUrl(courier: string, trackingId: string): string {
-  const found = COURIERS.find((c) => c.name.toLowerCase() === (courier || '').toLowerCase());
+  const canonical = resolveCourierName(courier);
+  const found = COURIERS.find((c) => c.name === canonical);
   return (found || COURIERS[COURIERS.length - 1]).trackUrl(trackingId);
 }
 
