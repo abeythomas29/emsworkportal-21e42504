@@ -7,9 +7,10 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Package, Plus, Search, ExternalLink, Loader2, Trash2, Image as ImageIcon } from 'lucide-react';
+import { Package, Plus, Search, ExternalLink, Loader2, Trash2, Image as ImageIcon, Pencil } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
+import { EditParcelDialog } from '@/components/parcels/EditParcelDialog';
 import { useParcels, useUpdateParcel, useDeleteParcel, getSignedParcelUrl, Parcel } from '@/hooks/useParcels';
 import { PARCEL_STATUSES, getCourierTrackingUrl } from '@/lib/couriers';
 import { AddParcelDialog } from '@/components/parcels/AddParcelDialog';
@@ -33,7 +34,7 @@ function ParcelPhoto({ path }: { path: string | null }) {
   );
 }
 
-function ParcelTable({ parcels, isLoading, search }: { parcels: Parcel[]; isLoading: boolean; search: string }) {
+function ParcelTable({ parcels, isLoading, search, onEdit }: { parcels: Parcel[]; isLoading: boolean; search: string; onEdit: (p: Parcel) => void }) {
   const { role, user } = useAuth();
   const update = useUpdateParcel();
   const del = useDeleteParcel();
@@ -100,9 +101,14 @@ function ParcelTable({ parcels, isLoading, search }: { parcels: Parcel[]; isLoad
                       <a href={trackUrl} target="_blank" rel="noreferrer"><ExternalLink className="w-3 h-3 mr-1" />Track</a>
                     </Button>
                     {canEdit && (
-                      <Button size="icon" variant="ghost" onClick={() => { if (confirm('Delete this parcel?')) del.mutate(p.id); }}>
-                        <Trash2 className="w-4 h-4 text-destructive" />
-                      </Button>
+                      <>
+                        <Button size="icon" variant="ghost" onClick={() => onEdit(p)} title="Edit parcel">
+                          <Pencil className="w-4 h-4" />
+                        </Button>
+                        <Button size="icon" variant="ghost" onClick={() => { if (confirm('Delete this parcel?')) del.mutate(p.id); }}>
+                          <Trash2 className="w-4 h-4 text-destructive" />
+                        </Button>
+                      </>
                     )}
                   </div>
                 </TableCell>
@@ -119,6 +125,7 @@ export default function ParcelsPage() {
   const { isLoading: authLoading, user } = useAuth();
   const [search, setSearch] = useState('');
   const [addOpen, setAddOpen] = useState(false);
+  const [editing, setEditing] = useState<Parcel | null>(null);
   const { data: parcels = [], isLoading } = useParcels();
 
   if (authLoading) {
@@ -161,16 +168,17 @@ export default function ParcelsPage() {
                 <TabsTrigger value="samples">Sample Dispatches ({samples.length})</TabsTrigger>
               </TabsList>
               <TabsContent value="all" className="mt-4">
-                <ParcelTable parcels={parcels} isLoading={isLoading} search={search} />
+                <ParcelTable parcels={parcels} isLoading={isLoading} search={search} onEdit={setEditing} />
               </TabsContent>
               <TabsContent value="samples" className="mt-4">
-                <ParcelTable parcels={samples} isLoading={isLoading} search={search} />
+                <ParcelTable parcels={samples} isLoading={isLoading} search={search} onEdit={setEditing} />
               </TabsContent>
             </Tabs>
           </CardContent>
         </Card>
       </div>
       <AddParcelDialog open={addOpen} onOpenChange={setAddOpen} />
+      <EditParcelDialog open={!!editing} onOpenChange={(o) => !o && setEditing(null)} parcel={editing} />
     </DashboardLayout>
   );
 }
