@@ -168,16 +168,17 @@ export default function ParcelsPage() {
                 <TabsTrigger value="samples">Sample Dispatches ({samples.length})</TabsTrigger>
               </TabsList>
               <TabsContent value="all" className="mt-4">
-                <ParcelTable parcels={parcels} isLoading={isLoading} search={search} />
+                <ParcelTable parcels={parcels} isLoading={isLoading} search={search} onEdit={setEditing} />
               </TabsContent>
               <TabsContent value="samples" className="mt-4">
-                <ParcelTable parcels={samples} isLoading={isLoading} search={search} />
+                <ParcelTable parcels={samples} isLoading={isLoading} search={search} onEdit={setEditing} />
               </TabsContent>
             </Tabs>
           </CardContent>
         </Card>
       </div>
       <AddParcelDialog open={addOpen} onOpenChange={setAddOpen} />
+      <EditParcelDialog open={!!editing} onOpenChange={(o) => !o && setEditing(null)} parcel={editing} />
     </DashboardLayout>
   );
 }
