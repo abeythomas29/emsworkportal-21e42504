@@ -101,9 +101,14 @@ function ParcelTable({ parcels, isLoading, search, onEdit }: { parcels: Parcel[]
                       <a href={trackUrl} target="_blank" rel="noreferrer"><ExternalLink className="w-3 h-3 mr-1" />Track</a>
                     </Button>
                     {canEdit && (
-                      <Button size="icon" variant="ghost" onClick={() => { if (confirm('Delete this parcel?')) del.mutate(p.id); }}>
-                        <Trash2 className="w-4 h-4 text-destructive" />
-                      </Button>
+                      <>
+                        <Button size="icon" variant="ghost" onClick={() => onEdit(p)} title="Edit parcel">
+                          <Pencil className="w-4 h-4" />
+                        </Button>
+                        <Button size="icon" variant="ghost" onClick={() => { if (confirm('Delete this parcel?')) del.mutate(p.id); }}>
+                          <Trash2 className="w-4 h-4 text-destructive" />
+                        </Button>
+                      </>
                     )}
                   </div>
                 </TableCell>
