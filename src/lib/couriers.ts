@@ -13,6 +13,7 @@ export const COURIERS: { name: string; trackUrl: (id: string) => string }[] = [
   { name: 'Professional', trackUrl: (id) => `https://www.tpcindia.com/Tracking2.aspx?id=${encodeURIComponent(id)}` },
   { name: 'Trackon', trackUrl: (id) => `https://trackon.in/Tracking/MultiTracking?TrackingNo=${encodeURIComponent(id)}` },
   { name: 'Gati', trackUrl: (id) => `https://www.gati.com/single-shipment-tracking/?dktNo=${encodeURIComponent(id)}` },
+  { name: 'Shree Maruti', trackUrl: (id) => `https://shreemaruti.com/track-shipment/?docket_number=${encodeURIComponent(id)}` },
   { name: 'Maruti', trackUrl: (id) => `https://www.maruticourier.com/tracking.aspx?docno=${encodeURIComponent(id)}` },
   { name: 'Other', trackUrl: (id) => `https://www.google.com/search?q=${encodeURIComponent(id + ' tracking')}` },
 ];
