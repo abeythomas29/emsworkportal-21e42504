@@ -34,7 +34,7 @@ function ParcelPhoto({ path }: { path: string | null }) {
   );
 }
 
-function ParcelTable({ parcels, isLoading, search }: { parcels: Parcel[]; isLoading: boolean; search: string }) {
+function ParcelTable({ parcels, isLoading, search, onEdit }: { parcels: Parcel[]; isLoading: boolean; search: string; onEdit: (p: Parcel) => void }) {
   const { role, user } = useAuth();
   const update = useUpdateParcel();
   const del = useDeleteParcel();
