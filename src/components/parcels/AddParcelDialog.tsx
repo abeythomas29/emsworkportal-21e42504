@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Loader2, Camera, Sparkles, Upload } from 'lucide-react';
-import { COURIERS, getCourierTrackingUrl } from '@/lib/couriers';
+import { COURIERS, getCourierTrackingUrl, resolveCourierName } from '@/lib/couriers';
 import { extractParcelFromImage, uploadParcelPhoto, useCreateParcel } from '@/hooks/useParcels';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
@@ -49,10 +49,9 @@ export function AddParcelDialog({ open, onOpenChange }: Props) {
       const res = await extractParcelFromImage(file);
       if (res.tracking_id) setTrackingId(res.tracking_id);
       if (res.courier) {
-        const match = COURIERS.find((c) => c.name.toLowerCase() === res.courier.toLowerCase());
-        setCourier(match?.name || 'Other');
+        setCourier(resolveCourierName(res.courier));
       }
-      toast.success(`Detected (${res.confidence} confidence)`);
+      toast.success(`Detected ${res.courier || 'courier'} (${res.confidence} confidence)`);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : 'AI extraction failed');
     } finally {
