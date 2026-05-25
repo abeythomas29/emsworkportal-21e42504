@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,13 +7,18 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Package, Plus, Search, ExternalLink, Loader2, Trash2, Image as ImageIcon, Pencil } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { Package, Plus, Search, ExternalLink, Loader2, Trash2, Image as ImageIcon, Pencil, CalendarIcon, X } from 'lucide-react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { EditParcelDialog } from '@/components/parcels/EditParcelDialog';
 import { useParcels, useUpdateParcel, useDeleteParcel, getSignedParcelUrl, Parcel } from '@/hooks/useParcels';
 import { PARCEL_STATUSES, getCourierTrackingUrl } from '@/lib/couriers';
 import { AddParcelDialog } from '@/components/parcels/AddParcelDialog';
+import type { DateRange } from 'react-day-picker';
 
 const statusColors: Record<string, string> = {
   pending: 'bg-muted text-muted-foreground',
