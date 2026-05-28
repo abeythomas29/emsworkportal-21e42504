@@ -23,6 +23,7 @@ import {
   ShoppingCart,
   Receipt,
   Package,
+  FlaskConical,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
@@ -142,6 +143,13 @@ const navItems: NavItem[] = [
     label: 'Parcels',
     path: '/parcels',
     roles: ['admin', 'manager', 'employee'],
+  },
+  {
+    icon: <FlaskConical size={20} />,
+    label: 'Research',
+    path: '/research',
+    roles: ['admin', 'manager', 'employee'],
+    departments: ['research'],
   },
   {
     icon: <Settings size={20} />,
