@@ -17,6 +17,7 @@ import { LowStockWidget } from '@/components/dashboard/LowStockWidget';
 import { SalesKpiStrip } from '@/components/dashboard/SalesKpiStrip';
 import { PendingLeavesCompact } from '@/components/dashboard/PendingLeavesCompact';
 import { PurchaseRequestsWidget } from '@/components/dashboard/PurchaseRequestsWidget';
+import { ResearchTodayWidget } from '@/components/dashboard/ResearchTodayWidget';
 import {
   Users,
   Clock,
@@ -206,6 +207,11 @@ export default function DashboardPage() {
                 <ProductionOTSummary />
                 <LowStockWidget />
               </div>
+            )}
+
+            {/* Research dept widget */}
+            {user?.department?.toLowerCase() === 'research' && (
+              <ResearchTodayWidget />
             )}
 
             {/* Purchase Requests for everyone */}
