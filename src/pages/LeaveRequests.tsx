@@ -93,6 +93,10 @@ export default function LeaveRequestsPage() {
     return labels[type] || type;
   };
 
+  if (role !== 'admin' && role !== 'manager') {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   if (isLoading) {
     return (
       <DashboardLayout>
