@@ -171,8 +171,8 @@ export function AddParcelDialog({ open, onOpenChange }: Props) {
         </div>
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>Cancel</Button>
-          <Button onClick={onSubmit} disabled={create.isPending}>
-            {create.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+          <Button onClick={onSubmit} disabled={submitting || create.isPending}>
+            {(submitting || create.isPending) && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
             Save Parcel
           </Button>
         </DialogFooter>
