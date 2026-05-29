@@ -24,6 +24,7 @@ export function AddParcelDialog({ open, onOpenChange }: Props) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [extracting, setExtracting] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [trackingId, setTrackingId] = useState('');
   const [courier, setCourier] = useState<string>('Other');
   const [clientName, setClientName] = useState('');
